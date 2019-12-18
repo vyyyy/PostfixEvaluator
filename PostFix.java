@@ -49,6 +49,8 @@ public class PostFix {
                         }
                     tokenScanner.close();
                 }
+                // Add a newline after each line is read for output csv file
+                collectTokens.add(System.lineSeparator());
             }
             fileReader.close();
         } catch (IOException e) {
