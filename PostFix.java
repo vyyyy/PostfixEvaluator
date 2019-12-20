@@ -7,17 +7,20 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
+import java.util.stream.*;
+import java.util.stream.Collectors;
+import java.lang.String;
 import java.lang.Math;
 
 /**
  * The Postfix program evaluates postfix expressions in a given CSV file and
  * outputs the results on the screen. Additionally, it saves a CSV file
- * containing the evaluated postfix expressions in the same dimensions of the
+ * containing the evaluated postfix expressions in the same dimensions as the
  * input CSV file.
  * 
  * @author Vyoma Patel
  * @version 1.0.1
- * @since 2019-12-19
+ * @since 2019-12-20
  */
 public class PostFix {
     public static void main(String[] args) {
@@ -62,15 +65,11 @@ public class PostFix {
                         collectTokens.add(String.valueOf((int) result));
                         // Add cell reference and token to linkedhashmap
                         mapping.put(columnToLetter(Cols) + String.valueOf(Rows), String.valueOf(result));
-                        // Print to STDOUT
-                        System.out.println(result);
                     } else {
                         // The token cannot be evaluated as a postfix expression
                         collectTokens.add("#ERR");
                         // Add cell reference and token to linkedhashmap
                         mapping.put(columnToLetter(Cols) + String.valueOf(Rows), "#ERR");
-                        // Print to STDOUT
-                        System.out.println("#ERR");
                     }
                     tokenScanner.close();
                     // Keep track of columns
@@ -93,8 +92,9 @@ public class PostFix {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        // @TODO: remove STDOUT
-        System.out.println(mapping);
+
+        // Print output to STDOUT
+        System.out.println(collectTokens);
     }
 
     /**
@@ -179,12 +179,24 @@ public class PostFix {
      * @param collectList The list of evaluated postfix expressions
      * @throws IOException
      */
-    public static void outputCSVFile(List<String> collectlist) throws IOException {
-        FileWriter csvWriter = new FileWriter("OutputCSVFile.csv");
-        for (String element : collectlist) {
-            csvWriter.write(element + ",");
+    public static void outputCSVFile(List<String> collectList) throws IOException {
+        // Create a new output file with default filename
+        File csvOutputFile = new File("OutputCSVFile.csv");
+        FileWriter csvWriter = new FileWriter(csvOutputFile);
+
+        try {
+            // Store each element
+            StringBuilder result = new StringBuilder();
+            for (String element : collectList) {
+                result.append(element + ",");
+            }
+            // Remove trailing comma from end of line
+            String output = result.toString().replaceAll(",$", "");
+            // Write contents to output file
+            csvWriter.write(output);
+            csvWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        csvWriter.flush();
-        csvWriter.close();
     }
 }
