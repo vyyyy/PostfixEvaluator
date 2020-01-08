@@ -4,18 +4,22 @@
 
 1. Clone this repository.
 
-2. Navigate to the directory named "evaluator" and build the java file:
+2. Navigate to the directory named "PostfixEvaluator":
 
-   #### \$ cd evaluator && find . -name ‘\*.java’ | xargs javac
+   #### \$ cd PostfixEvaluator
 
-3. Run the PostFix class on the default csv file provided (SampleCSVFile.csv):
+3. Navigate to the directory named "src" and build the java class:
 
-   #### \$ java PostFix
+   #### \$ cd src && find . -name ‘\*.java’ | xargs javac
 
-4. Or, run the PostFix class on your own csv file:
+4. Run the Main class on the default csv file provided (SampleCSVFile.csv):
 
-   #### \$ java PostFix YourInputCSVFile.csv
+   #### \$ java postfixeval.Main
 
-5. Check the directory for an output csv file named OutputCSVFile.csv:
+5. Or, run the Main class on your own csv file:
+
+   #### \$ java postfixeval.Main YourInputCSVFile.csv
+
+6. Check the directory for an output csv file named OutputCSVFile.csv:
 
    #### \$ test -f OutputCSVFile.csv && echo "File found"
